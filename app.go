@@ -27,8 +27,8 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	fmt.Printf("%v\n\n", urls)
 
-	t, _ := template.ParseFiles("template/index.html")
-	err = t.Execute(w, map[string]interface{}{"Urls": urls})
+	t, _ := template.ParseFiles("template/index.html", "template/default.html")
+	err = t.ExecuteTemplate(w, "default", map[string]interface{}{"Urls": urls})
 	if err != nil {
 		log.Panic(err)
 	}

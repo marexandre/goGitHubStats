@@ -1,17 +1,8 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>goGitHubStats</title>
-</head>
-<body>
-    <h1>goGitHubStats</h1>
-
-    <ul>
-        {{range $url := .Urls}}
-        <li>{{$url}}</li>
-        {{end}}
-    </ul>
-
-</body>
-</html>
+{{define "body"}}
+<h1>goGitHubStats</h1>
+<ul>
+    {{range $url := .Urls}}
+    <li>{{$url}}</li>
+    {{end}}
+</ul>
+{{end}}
