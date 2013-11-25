@@ -1,4 +1,4 @@
-goGitHubStatus
+goGitHubStats
 ==============
 
-App to show your GitHub status
+App to check your GitHub stats
