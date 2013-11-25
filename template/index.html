@@ -7,5 +7,11 @@
 <body>
     <h1>goGitHubStats</h1>
 
+    <ul>
+        {{range $url := .Urls}}
+        <li>{{$url}}</li>
+        {{end}}
+    </ul>
+
 </body>
 </html>
