@@ -20,26 +20,32 @@ type Project struct {
 	Description *string
 }
 
+func filterProjects(rs []github.Repository) []Project {
+	ps := []Project{}
+	for _, v := range rs {
+		p := Project{}
+		p.ID = v.ID
+		p.URL = v.URL
+		p.HTMLURL = v.HTMLURL
+		p.Name = v.Name
+		p.Description = v.Description
+		ps = append(ps, p)
+	}
+	return ps
+}
+
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	client := github.NewClient(nil)
 
 	opt := &github.RepositoryListOptions{Type: "owner", Sort: "updated", Direction: "desc"}
 	repos, _, err := client.Repositories.List(userName, opt)
+
 	if err != nil {
 		log.Panic(err)
 	}
 	fmt.Printf("%v\n\n", github.Stringify(repos))
 
-	projects := []Project{}
-	for _, p := range repos {
-		project := Project{}
-		project.ID = p.ID
-		project.URL = p.URL
-		project.HTMLURL = p.HTMLURL
-		project.Name = p.Name
-		project.Description = p.Description
-		projects = append(projects, project)
-	}
+	projects := filterProjects(repos)
 
 	t, _ := template.ParseFiles("template/base.html", "template/index.html")
 	err = t.ExecuteTemplate(w, "base", map[string]interface{}{"Projects": projects})
