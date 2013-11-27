@@ -12,6 +12,14 @@ var (
 	userName = "marexandre"
 )
 
+type Project struct {
+	ID          *int
+	URL         *string
+	HTMLURL     *string
+	Name        *string
+	Description *string
+}
+
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	client := github.NewClient(nil)
 
@@ -20,15 +28,21 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Panic(err)
 	}
+	fmt.Printf("%v\n\n", github.Stringify(repos))
 
-	var urls []string
-	for _, v := range repos {
-		urls = append(urls, github.Stringify(v.HTMLURL))
+	projects := []Project{}
+	for _, p := range repos {
+		project := Project{}
+		project.ID = p.ID
+		project.URL = p.URL
+		project.HTMLURL = p.HTMLURL
+		project.Name = p.Name
+		project.Description = p.Description
+		projects = append(projects, project)
 	}
-	fmt.Printf("%v\n\n", urls)
 
 	t, _ := template.ParseFiles("template/base.html", "template/index.html")
-	err = t.ExecuteTemplate(w, "base", map[string]interface{}{"Urls": urls})
+	err = t.ExecuteTemplate(w, "base", map[string]interface{}{"Projects": projects})
 	if err != nil {
 		log.Panic(err)
 	}
