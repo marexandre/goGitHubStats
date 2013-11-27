@@ -37,9 +37,16 @@ func filterProjects(rs []github.Repository) []Project {
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	client := github.NewClient(nil)
 
+	// Get user data
+	user, _, err := client.Users.Get(userName)
+	if err != nil {
+		log.Panic(err)
+	}
+	fmt.Printf("%v\n\n", github.Stringify(user))
+
+	// Get user Repositories data
 	opt := &github.RepositoryListOptions{Type: "owner", Sort: "updated", Direction: "desc"}
 	repos, _, err := client.Repositories.List(userName, opt)
-
 	if err != nil {
 		log.Panic(err)
 	}
@@ -47,8 +54,9 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 
 	projects := filterProjects(repos)
 
+	// prepare & render template
 	t, _ := template.ParseFiles("template/base.html", "template/index.html")
-	err = t.ExecuteTemplate(w, "base", map[string]interface{}{"Projects": projects})
+	err = t.ExecuteTemplate(w, "base", map[string]interface{}{"Projects": projects, "User": user})
 	if err != nil {
 		log.Panic(err)
 	}

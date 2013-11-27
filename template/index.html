@@ -1,10 +1,13 @@
 {{define "body"}}
 <h1>goGitHubStats</h1>
+
+<img src="{{.User.AvatarURL}}" alt="">
+<h3>{{.User.Name}}</h3>
+<h3>{{.User.Email}}</h3>
+
 <ul>
     {{range $project := .Projects}}
     <li>
-        <p>{{$project.ID}}</p>
-        <p>{{$project.URL}}</p>
         <p>{{$project.HTMLURL}}</p>
         <p>{{$project.Name}}</p>
         <p>{{$project.Description}}</p>
