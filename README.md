@@ -1,4 +1,7 @@
 goGitHubStats
 ==============
 
-App to check your GitHub stats
+App to check your GitHub stats.
+
+## this is still under development
+
