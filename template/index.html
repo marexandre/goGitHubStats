@@ -1,28 +1,36 @@
 {{define "body"}}
-<h1>goGitHubStats</h1>
+<div role="navigation" class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <a href="#" class="navbar-brand">goGitHubStats</a>
+    </div>
+  </div>
+</div>
 
-<div class="row col-xs-8">
+<div class="container">
+  <div class="row col-xs-8 profile">
     <div class="col-xs-2">
-        <img src="{{.User.AvatarURL}}" alt="">
+      <img src="{{.User.AvatarURL}}" alt="">
     </div>
     <div class="col-xs-6">
-        <p>{{.User.Name}}</p>
-        <p>{{.User.Login}}</p>
-        <p>{{.User.Email}}</p>
+      <p><strong>{{.User.Name}}</strong></p>
+      <p>{{.User.Login}}</p>
+      <p>{{.User.Email}}</p>
     </div>
-</div>
-<div class="row col-xs-8">
+  </div>
+  <div class="row col-xs-8">
     <h3>Projects</h3>
     <ul class="list-unstyled">
-        {{range $project := .Projects}}
-        <li>
-            <dl>
-              <dt>{{$project.Name}}</dt>
-              <dd>{{$project.Description}}</dd>
-              <dd><a href="{{$project.HTMLURL}}">{{$project.HTMLURL}}</a></dd>
-            </dl>
-        </li>
-        {{end}}
+      {{range $project := .Projects}}
+      <li>
+        <dl>
+        <dt>{{$project.Name}}</dt>
+        <dd>{{$project.Description}}</dd>
+        <dd><a href="{{$project.HTMLURL}}">{{$project.HTMLURL}}</a></dd>
+        </dl>
+      </li>
+      {{end}}
     </ul>
+  </div>
 </div>
 {{end}}
